@@ -3,8 +3,11 @@ package com.example.secondtry;
 import androidx.appcompat.app.AppCompatActivity;
 import com.fathzer.soft.javaluator.*;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    public class BaseActivity extends Activity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                public void uncaughtException(Thread paramThread, Throwable paramThrowable) {
+                    Log.e("Error"+Thread.currentThread().getStackTrace()[2],paramThrowable.getLocalizedMessage());
+                }
+            });
+        }
+    }
 
 
      public String function(double h, String method) {
@@ -107,14 +122,59 @@ public class MainActivity extends AppCompatActivity {
 
      }
 
+     public void exceptionManager(String test) {
+        final DoubleEvaluator exception = new DoubleEvaluator();
 
-    public void handiest(View v) {
+        try{
+            exception.evaluate(test);
+        }
+        catch (IllegalArgumentException a){
+
+        }
+     }
+
+
+    public void handiest(View view) {
+        Boolean check = false;
         TextView tv1 = findViewById(R.id.f_val);
         TextView tv2 = findViewById(R.id.der1);
         TextView tv3 = findViewById(R.id.der2);
-        tv1.setText(function(0, "regular"));
-        tv2.setText(function(0.00001, "dev1"));
-        tv3.setText(function(0.00001, "dev2"));
+        TextView inv_1 = findViewById(R.id.inv_1);
+        TextView inv_2 = findViewById(R.id.inv_2);
+        TextView func = findViewById(R.id.function);
+        android.widget.TextView xvar = findViewById(R.id.xvar);
+        DoubleEvaluator exception = new DoubleEvaluator();
+
+        if ((func.getText().toString().length() < 1) || (xvar.getText().toString().length() < 1)){
+            inv_1.setText("Invalid input");
+            inv_2.setText("Invalid input");
+            check = true;
+        }
+        try{
+            final StaticVariableSet<Double> variable = new StaticVariableSet<Double>();
+            variable.set("x", 3.00);
+            exception.evaluate(func.getText().toString(), variable);
+        } catch (Exception a) {
+            inv_1.setText("Invalid input");
+            check = true;
+        }
+
+        try{
+            exception.evaluate(xvar.getText().toString());
+        } catch (Exception b) {
+            inv_2.setText("Invalid input");
+            check = true;
+        }
+
+        finally {
+            if (!check) {
+                tv1.setText(function(0, "regular"));
+                tv2.setText(function(0.00001, "dev1"));
+                tv3.setText(function(0.00001, "dev2"));
+                inv_1.setText("");
+                inv_2.setText("");
+            }
+        }
     }
 
     Boolean firstTextsel = false;
@@ -132,16 +192,57 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void xbtn(View v) {
-        TextView tv = (TextView) v;
+        Button b = (Button)v;
+        String buttonText = b.getText().toString();
+        CharSequence btntxt = buttonText;
         if (firstTextsel) {
             TextView edit1 = findViewById(R.id.function);
-            edit1.append("x");
+
+            edit1.append(btntxt);
+        }
+        else if (secTextsel && !Objects.equals(btntxt.toString(), "x")) {
+            TextView edit1 = findViewById(R.id.xvar);
+            edit1.append(btntxt);
+        }
+    }
+
+    public void del(View v) {
+        if (firstTextsel) {
+            TextView edit1 = findViewById(R.id.function);
+            String txtstr = edit1.getText().toString();
+            if (txtstr.length() > 0){
+                edit1.setText(txtstr.substring(0, txtstr.length() - 1));
+            }
         }
         else if (secTextsel) {
             TextView edit1 = findViewById(R.id.xvar);
-            edit1.append("x");
+            String txtstr = edit1.getText().toString();
+            if (txtstr.length() > 0){
+                edit1.setText(txtstr.substring(0, txtstr.length() - 1));
+            }
         }
+    }
 
+    public void div(View v) {
+        if (firstTextsel) {
+            TextView edit1 = findViewById(R.id.function);
+            edit1.append("1/");
+        }
+        else if (secTextsel) {
+            TextView edit1 = findViewById(R.id.xvar);
+            edit1.append("1/");
+        }
+    }
+
+    public void pi(View v) {
+        if (firstTextsel) {
+            TextView edit1 = findViewById(R.id.function);
+            edit1.append("pi");
+        }
+        else if (secTextsel) {
+            TextView edit1 = findViewById(R.id.xvar);
+            edit1.append("pi");
+        }
     }
 
 }
