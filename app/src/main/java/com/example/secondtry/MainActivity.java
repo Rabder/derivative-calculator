@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -20,11 +21,12 @@ import java.util.Objects;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-
+    public enum WindowSizeClass { COMPACT, MEDIUM, EXPANDED }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     private View.OnClickListener btnClick = new View.OnClickListener() {
@@ -34,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+
 
     public class BaseActivity extends Activity {
         @Override
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+
 
 
      public String function(double h, String method) {
