@@ -146,14 +146,13 @@ public class MainActivity extends AppCompatActivity {
         TextView tv2 = findViewById(R.id.der1);
         TextView tv3 = findViewById(R.id.der2);
         TextView inv_1 = findViewById(R.id.inv_1);
-        TextView inv_2 = findViewById(R.id.inv_2);
+
         TextView func = findViewById(R.id.function);
         android.widget.TextView xvar = findViewById(R.id.xvar);
         DoubleEvaluator exception = new DoubleEvaluator();
 
         if ((func.getText().toString().length() < 1) || (xvar.getText().toString().length() < 1)){
             inv_1.setText("Invalid input");
-            inv_2.setText("Invalid input");
             check = true;
         }
         try{
@@ -168,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
         try{
             exception.evaluate(xvar.getText().toString());
         } catch (Exception b) {
-            inv_2.setText("Invalid input");
             check = true;
         }
 
@@ -178,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 tv2.setText(function(0.00001, "dev1"));
                 tv3.setText(function(0.00001, "dev2"));
                 inv_1.setText("");
-                inv_2.setText("");
             }
         }
     }

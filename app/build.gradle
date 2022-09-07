@@ -9,8 +9,8 @@ android {
         applicationId "com.rabder.derivative_calc"
         minSdk 21
         targetSdk 32
-        versionCode 6
-        versionName "1.5"
+        versionCode 10
+        versionName "0.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
