@@ -72,10 +72,10 @@ public class MainActivity extends AppCompatActivity {
              Double result = eval.evaluate(user_func, variables);
              double rounded = Math.round(result * 1000.0) / 1000.0;
 
-             if (Math.abs(rounded) > 10e9) {
+             if (Math.abs(rounded) > 10e50) {
                  return "Infinity or undefined";
              }
-             else if (Math.abs(rounded) < 10e-6){
+             else if (Math.abs(rounded) < 10e-50){
                  return "0";
              }
              String rounded1 = String.valueOf(rounded);
@@ -89,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
              Double fxh = eval.evaluate(user_func, variables);
              double lim = Math.round(((fxh - fx) / h) * 1000.0) / 1000.0;
 
-             if (Math.abs(lim) > 10e9) {
+             if (Math.abs(lim) > 10e100) {
                  return "Infinity or undefined";
              }
-             else if (Math.abs(lim) < 10e-6){
+             else if (Math.abs(lim) < 10e-100){
                  return "0";
              }
              String roundlim = String.valueOf(lim);
@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity {
 
              double lim2 = Math.round(((der2-der1)/h)*10000.0)/10000.0;
 
-             if (Math.abs(lim2) > 10e9){
+             if (Math.abs(lim2) > 10e100){
                  return "Infinity or undefined";
              }
-             else if (Math.abs(lim2) < 10e-6){
+             else if (Math.abs(lim2) < 10e-100){
                  return "0";
              }
              String roundlim2 = String.valueOf(lim2);
